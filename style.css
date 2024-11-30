@@ -1,0 +1,269 @@
+
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", Arial, sans-serif;
+}
+
+/* Body Styling */
+body {
+    background-color: #f0f2f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    margin: 5px 50px 5px 50px; /* t r b l */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    /* background: linear-gradient(135deg, #6c5ce7, #00cec9); */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    top: 0;
+    z-index: 1000;
+    color: white;
+    border-radius: 10px;
+}
+
+#container{
+    display: flex;
+    height: 100vh;
+}
+
+/* Logo */
+#logo img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+#logo img:hover {
+    transform: scale(1.1);
+}
+
+/* Search Bar */
+#search-bar-container input {
+    width: 400px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: white;
+    color: #333;
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#search-bar-container input:focus {
+    box-shadow: 0 4px 8px rgba(46, 204, 113, 0.6);
+    border: 1px solid #00cec9;
+}
+
+/* Signup/Login */
+#signup-login {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#signup-login button {
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+#sign-up-btn {
+    background-color: #e17055;
+    color: white;
+}
+
+#sign-up-btn:hover {
+    background-color: #d63031;
+    transform: translateY(-2px);
+}
+
+#login-btn {
+    background-color: #0984e3;
+    color: white;
+}
+
+#login-btn:hover {
+    background-color: #0652dd;
+    transform: translateY(-2px);
+}
+
+/* Navigation Bar */
+#nav-bar {
+    width: 60px;
+    /* background: linear-gradient(135deg, #fdcb6e, #e17055); */
+    height: 100vh;
+    border-radius: 15px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+#nav-list button {
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    color: #fdcb6e;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#nav-list button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Song List */
+#song-list, #fav-song-list {
+    flex: 5;
+    padding: 15px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.song-card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    /* background: linear-gradient(135deg, #6c5ce7, #74b9ff); */
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.song-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.song-avathar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.song-title {
+    color: black;
+    flex:1;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.fav-icon-en,
+.fav-icon-dis,
+.play-btn, 
+.pause-btn {
+    font-size: large;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fav-icon-en:hover,
+.fav-icon-dis:hover,
+.play-btn:hover,
+.pause-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* MP3 Player */
+#mp3-card {
+    flex: 3;
+    /* background: linear-gradient(135deg, #fd79a8, #6c5ce7); */
+    border-radius: 15px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+#img-container img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+#mp3-song-title {
+    color: black;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#controls{
+    margin: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#controls button {
+    background-color: white;
+    color: #fd79a8;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#controls button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+#progress-bar {
+    margin-top: 40px;
+    height: 5px;
+    width: 80%;
+    color: #d63031;
+}

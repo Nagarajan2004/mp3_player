@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MP3 Player</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- <header>
+        <div id="logo">
+            <img src="img/logo.png" alt="Logo" style="width: 40px; height: 40px; margin-left: 10px;">
+        </div>
+        <div id="search-bar-container">
+            <input type="text" placeholder="Search for something...">
+        </div>
+        <div id="signup-login" style="margin-right: 10px;">
+            <button id="sign-up-btn">Sign Up</button>
+            <p>or</p>
+            <button id="login-btn">Login</button>
+        </div>
+    </header>     -->
+
+    <div id="container">
+        <nav id="nav-bar">
+            <div id="nav-list">
+                <button id="nav-fav" title="Home" onclick="showHomeList()">🏠</button>
+            </div>
+            <div id="nav-list">
+                <button id="nav-fav" title="Favorites" onclick="showFavList()">❤</button>
+            </div>
+            <div id="nav-list" style="margin-top: auto;">
+                <button id="nav-fav" title="feedback">✉️</button>
+            </div>
+        </nav>
+
+        <template id="song-card-template">
+            <div class="song-card">
+                <img src="img/avathar.png" alt="Song Avatar" class="song-avathar" />
+                <div class="song-title">Song Title</div>
+                <button class="fav-icon-en" title="Favorite" style="color: #bababa;">&#10084;</button>
+                <button class="fav-icon-dis" title="Favorite" style="color: #f56df3; display: none;">&#10084;</button> 
+                <button class="play-btn" title="play" style="display: block;">▶</button>
+                <button class="pause-btn" title="pause" style="display: none;">||</button>
+            </div>
+        </template>
+
+        <div id="song-list">
+            <!-- <h1>Song List</h1> -->
+        </div>
+
+        <div id="fav-song-list" style="display: none;">
+            <!-- <h1>Favorites Songs</h1> -->
+        </div>
+
+        <div id="mp3-card">
+            <div id="img-container">
+                <img id="song-img" src="img/avathar.png" alt="Song Image" />
+            </div>
+            <div id="mp3-song-title">Song Title</div>
+            <audio src="" class="audio" controls style="display: none;"></audio>
+            <div id="progress" style="display: flex;">
+                <p id="current-time" style="color: black;"></p>
+                <input type="range" min="0" max="100" value="0" id="progress-bar" style="display: block;"/>
+                <p id="max-time" style="color: black;"></p>
+            </div>
+            <div id="controls">
+                <button class="prev" title="Previous">⏮</button>
+                <button class="mp3-play-btn" title="play" style="display: block;">▶</button>
+                <button class="mp3-pause-btn" title="pause" style="display: none;">||</button>
+                <button class="next" title="Next">⏭</button>
+                <!-- <button class="fav-icon" title="Add to Favorites">❤</button> -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" type="text/javascript"></script>
+</body>
+</html>
