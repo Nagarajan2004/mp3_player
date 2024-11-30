@@ -112,8 +112,23 @@ document.addEventListener('click', (event) => {
         mp3Card.querySelector('.audio').src = "songs/"+parent.querySelector('.song-title').innerText+".mp3";
         mp3Card.querySelector('.audio').play();
         
+        const songDiv = document.getElementById('song-list').querySelectorAll('.song-card');
+        songDiv.forEach(s => {
+            if (s.querySelector('.play-btn').style.display == 'none') {
+                s.querySelector('.play-btn').style.display = 'block';
+                s.querySelector('.pause-btn').style.display = 'none';
+            }
+        })
+        
         currActiveSong = parent;
 
+        songDiv.forEach((s, ind) => {
+            if(s.isEqualNode(currActiveSong)){
+                currSong = ind;
+            }
+            ind++;
+        })
+        
         parent.querySelector('.play-btn').style.display = 'none';
         parent.querySelector('.pause-btn').style.display = 'block';
 
@@ -127,13 +142,6 @@ document.addEventListener('click', (event) => {
         document.querySelector('.mp3-play-btn').style.display = 'none';
         document.querySelector('.mp3-pause-btn').style.display = 'block';
 
-        const songDiv = document.getElementById('song-list').querySelectorAll('.song-card');
-        songDiv.forEach((s, ind) => {
-            if(s.isEqualNode(currActiveSong)){
-                currSong = ind;
-            }
-            ind++;
-        })
     } else if (t.classList.contains('pause-btn')) {
         t.parentElement.querySelector('.pause-btn').style.display = 'none';
         t.parentElement.querySelector('.play-btn').style.display = 'block';
