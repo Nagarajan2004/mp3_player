@@ -51,7 +51,7 @@ function pageOnload(){
         document.getElementById("song-list").appendChild(songCardUsinTemplete(song));
     })
 
-    currActiveSong = document.getElementById('song-list').firstElementChild;
+    currActiveSong = document.getElementById('song-list').children[1];
     console.log(currActiveSong);
 }
 

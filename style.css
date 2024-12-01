@@ -162,6 +162,7 @@ header {
 
 .song-card:hover {
     transform: scale(1.02);
+    background-color: rgb(238, 238, 238);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
