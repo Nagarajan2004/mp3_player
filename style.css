@@ -110,7 +110,7 @@ header {
 /* Navigation Bar */
 #nav-bar {
     width: 60px;
-    /* background: linear-gradient(135deg, #fdcb6e, #e17055); */
+    /* background: linear-gradient(135deg, #dbdbdb, #dbdbdb); */
     height: 100vh;
     border-radius: 15px;
     display: flex;
@@ -130,6 +130,7 @@ header {
     color: #fdcb6e;
     font-size: 20px;
     cursor: pointer;
+    border: 1px solid rgb(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -154,7 +155,8 @@ header {
     margin-bottom: 15px;
     padding: 15px;
     border-radius: 15px;
-    /* background: linear-gradient(135deg, #6c5ce7, #74b9ff); */
+    background: linear-gradient(135deg, #dbdbdb, #b9b9b9);
+    /* border: 1px solid rgb(0, 0, 0, 0.05); */
     color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;

@@ -1,39 +1,4 @@
-const songList = [
-    {
-        "img": "Andha Aruvi Pol Anbai Tharuvaal.png",
-        "title": "Andha Aruvi Pol Anbai Tharuvaal"
-    },
-    {
-        "img": "En Uyir Neethane.png",
-        "title": "En Uyir Neethane"
-    },
-    {
-        "img": "Leo Das Entry.png",
-        "title": "Leo Das Entry"
-    },
-    {
-        "img": "Oru Naalil.png",
-        "title": "Oru Naalil"
-    },
-    {
-        "img": "Sara Sara Pamba.png",
-        "title": "Sara Sara Pamba"
-    },
-    {
-        "img": "Sindhiya Venmani.png",
-        "title": "Sindhiya Vennmani"
-    },
-    {
-        "img": "Thatha Thatha Konjam Podi Kodu.png",
-        "title": "Thatha Thatha Konjam Podi Kodu"
-    },
-    {
-        "img": "Unch Maza Zoka.png",
-        "title": "Unch Maza Zoka"
-    }
-]
-
-// const songList =[];
+let songList=[];
 
 let favSongList = [];
 
@@ -41,30 +6,74 @@ let currActiveSong = null;
 
 let currSong = 0;
 
+async function fetchData() {
+    try {
+        const req = await fetch("http://localhost:8080/mp3_player_backend/song", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        songList = await req.json();
+        pageOnload();
+    } catch (error) {
+        console.log(error);
+    }
+}
+fetchData();
+
 function pageOnload(){
-    document.getElementById('song-img').src = "img/"+songList[0]["img"];
-    document.getElementById('mp3-song-title').innerText = songList[0]["title"];
-    document.querySelector('.audio').src = "songs/"+songList[0]["title"]+".mp3";
+    // document.getElementById('song-img').src = "img/"+songList[0]["img"];
+    // document.getElementById('mp3-song-title').innerText = songList[0]["title"];
+    // document.querySelector('.audio').src = "songs/"+songList[0]["title"]+".mp3";
 
     //songList ==> JSON
     songList.forEach((song)=>{
-        document.getElementById("song-list").appendChild(songCardUsinTemplete(song));
+        document.getElementById("song-list").appendChild(songCardUsingTemplate(song));
     })
 
     currActiveSong = document.getElementById('song-list').children[1];
     console.log(currActiveSong);
+    document.getElementById('song-img').src = currActiveSong.querySelector('.song-avathar').src;
+    document.getElementById('mp3-song-title').innerText = currActiveSong.querySelector('.song-title').innerText;
 }
 
+
 /* song-card template*/
-function songCardUsinTemplete(eachSong) {
+function songCardUsingTemplate(eachSong) {
     const template = document.getElementById('song-card-template');
     const songCard = template.content.cloneNode(true);
-    
-    songCard.querySelector('.song-avathar').src = "img/"+eachSong["img"];
-    songCard.querySelector('.song-title').textContent = eachSong["title"];
+
+    const imgStr = atob(eachSong["img"]);
+    let len = imgStr.length;
+    let bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+        bytes[i] = imgStr.charCodeAt(i);
+    }
+    const imgBlob = new Blob([bytes], { type: 'image/png' });
+
+    const audioStr = atob(eachSong["audio"]);
+    len = audioStr.length;
+    bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+        bytes[i] = audioStr.charCodeAt(i);
+    }
+    const audioBlob = new Blob([bytes], { type: 'audio/mp3' });
+
+    const imgUrl = URL.createObjectURL(imgBlob);
+    const audioUrl = URL.createObjectURL(audioBlob);
+    console.log(audioBlob)
+    songCard.querySelector('.song-avathar').src = imgUrl;
+    songCard.querySelector('.audio-src').src = audioUrl;
+    songCard.querySelector('.audio').load();
+
+    songCard.querySelector('.song-title').innerText = eachSong["song-title"];
+
+    // console.log(eachSong);
     
     return songCard;
 }
+
 
 /* show favorite song list */
 function showFavList(){
@@ -109,19 +118,32 @@ document.addEventListener('click', (event) => {
         
         mp3Card.querySelector('#song-img').src = parent.querySelector('.song-avathar').src;
         mp3Card.querySelector('#mp3-song-title').innerText = parent.querySelector('.song-title').innerText;
-        mp3Card.querySelector('.audio').src = "songs/"+parent.querySelector('.song-title').innerText+".mp3";
-        mp3Card.querySelector('.audio').play();
+        console.log(parent);
+        parent.querySelector('.audio').play();
         
+        currActiveSong = parent;
         const songDiv = document.getElementById('song-list').querySelectorAll('.song-card');
         songDiv.forEach(s => {
-            if (s.querySelector('.play-btn').style.display == 'none') {
+            if (s.isEqualNode(parent)) {
+                s.querySelector('.play-btn').style.display = 'none';
+                s.querySelector('.pause-btn').style.display = 'block';
+            } else {
                 s.querySelector('.play-btn').style.display = 'block';
                 s.querySelector('.pause-btn').style.display = 'none';
             }
         })
         
-        currActiveSong = parent;
-
+        const favSongDiv = document.getElementById('fav-song-list').querySelectorAll('.song-card');
+        favSongDiv.forEach((s) => {
+            if(s.querySelector('.song-title').innerText == parent.querySelector('.song-title').innerText){
+                s.querySelector('.play-btn').style.display = 'none';
+                s.querySelector('.pause-btn').style.display = 'block';
+            } else {
+                s.querySelector('.play-btn').style.display = 'block';
+                s.querySelector('.pause-btn').style.display = 'none';
+            }
+        })
+        
         songDiv.forEach((s, ind) => {
             if(s.isEqualNode(currActiveSong)){
                 currSong = ind;
@@ -132,32 +154,38 @@ document.addEventListener('click', (event) => {
         parent.querySelector('.play-btn').style.display = 'none';
         parent.querySelector('.pause-btn').style.display = 'block';
 
-        const favSongDiv = document.getElementById('fav-song-list').querySelectorAll('.song-card');
-        favSongDiv.forEach((s) => {
-            if(s.isEqualNode(parent)){
-                s.querySelector('.play-btn').style.display = 'none';
-                s.querySelector('.pause-btn').style.display = 'block';
-            }
-        })
         document.querySelector('.mp3-play-btn').style.display = 'none';
         document.querySelector('.mp3-pause-btn').style.display = 'block';
+
+        parent.querySelector('.audio').play().then(() => {
+            setInterval(() => {
+                const currentTime = audio.currentTime;
+                const duration = audio.duration;
+                document.getElementById('progress-bar').value = (currentTime / duration) * 100;
+                document.getElementById('current-time').innerText = 
+                    Math.floor(currentTime / 60) + ":" + String(Math.floor(currentTime % 60)).padStart(2, '0');
+                document.getElementById('max-time').innerText = 
+                    Math.floor(duration / 60) + ":" + String(Math.floor(duration % 60)).padStart(2, '0');
+            }, 500);
+        }).catch(error => {
+            console.log('Failed to play audio:', error);
+        });
 
     } else if (t.classList.contains('pause-btn')) {
         t.parentElement.querySelector('.pause-btn').style.display = 'none';
         t.parentElement.querySelector('.play-btn').style.display = 'block';
         document.querySelector('.mp3-play-btn').style.display = 'block';
         document.querySelector('.mp3-pause-btn').style.display = 'none';
-        document.querySelector('.audio').pause();
+        t.parentElement.querySelector('.audio').pause();
         const favSongDiv = document.getElementById('fav-song-list').querySelectorAll('.song-card');
         favSongDiv.forEach((s) => {
-            if(s.isEqualNode(t.parentElement)){
+            if(s.querySelector('.play-btn').style.display = 'none'){
                 s.querySelector('.play-btn').style.display = 'block';
                 s.querySelector('.pause-btn').style.display = 'none';
             }
         })
     } else if (t.classList.contains('mp3-play-btn')) {
-        // console.log(t);
-        document.querySelector('.audio').play();
+        currActiveSong.querySelector('.audio').play();
         const songDiv = document.getElementById('song-list').querySelectorAll('.song-card');
         songDiv.forEach((s) => {
             if(s.isEqualNode(currActiveSong)){
@@ -175,7 +203,7 @@ document.addEventListener('click', (event) => {
         t.parentElement.querySelector('.mp3-play-btn').style.display = 'none';
         t.parentElement.querySelector('.mp3-pause-btn').style.display = 'block';
     } else if (t.classList.contains('mp3-pause-btn')){
-        document.querySelector('.audio').pause();
+        currActiveSong.querySelector('.audio').pause();
         const songDiv = document.getElementById('song-list').querySelectorAll('.song-card');
         songDiv.forEach((s) => {
             if(s.isEqualNode(currActiveSong)){
@@ -200,7 +228,6 @@ document.addEventListener('click', (event) => {
         currActiveSong = document.getElementById('song-list').children[currSong];
         document.getElementById('song-img').src = currActiveSong.querySelector('.song-avathar').src;
         document.getElementById('mp3-song-title').innerText = currActiveSong.querySelector('.song-title').innerText;
-        document.querySelector(".audio").src = "songs/"+currActiveSong.querySelector('.song-title').innerText+".mp3";
     } else if (t.classList.contains('next')){
         currSong++;
         if(currSong >= songList.length){
@@ -209,7 +236,6 @@ document.addEventListener('click', (event) => {
         currActiveSong = document.getElementById('song-list').children[currSong];
         document.getElementById('song-img').src = currActiveSong.querySelector('.song-avathar').src;
         document.getElementById('mp3-song-title').innerText = currActiveSong.querySelector('.song-title').innerText;
-        document.querySelector(".audio").src = "songs/"+currActiveSong.querySelector('.song-title').innerText+".mp3";
     }
 
 });
@@ -218,20 +244,12 @@ document.getElementById('progress-bar').addEventListener('input', e => {
     document.querySelector('.audio').currentTime = document.getElementById('progress-bar').value;
 })
 
-document.querySelector('.audio').onloadedmetadata = () => {
-    document.getElementById('progress-bar').max = document.querySelector('.audio').duration;
-    document.getElementById('progress-bar').value = document.querySelector('.audio').currentTime;
-    document.getElementById('current-time').innerText = Math.floor(document.querySelector('.audio').currentTime/60) +":"+ Math.floor(document.querySelector('.audio').currentTime%60);
-    document.getElementById('max-time').innerText = Math.floor(document.querySelector('.audio').duration/60) +":"+ Math.floor(document.querySelector('.audio').duration%60);
-}
-
-if(document.querySelector('.audio').play()){
-    setInterval(() => {
+if(document.querySelector('.audio-src')){
+    document.querySelector('.audio').onloadedmetadata = () => {
+        document.getElementById('progress-bar').max = document.querySelector('.audio').duration;
         document.getElementById('progress-bar').value = document.querySelector('.audio').currentTime;
         document.getElementById('current-time').innerText = Math.floor(document.querySelector('.audio').currentTime/60) +":"+ Math.floor(document.querySelector('.audio').currentTime%60);
         document.getElementById('max-time').innerText = Math.floor(document.querySelector('.audio').duration/60) +":"+ Math.floor(document.querySelector('.audio').duration%60);
-    }, 500);
+    }
 }
 
-
-pageOnload();

@@ -38,6 +38,9 @@
             <div class="song-card">
                 <img src="img/avathar.png" alt="Song Avatar" class="song-avathar" />
                 <div class="song-title">Song Title</div>
+                <audio class="audio" controls style="display: none;">
+                    <source class="audio-src" src="" type="audio/mp3">
+                </audio>
                 <button class="fav-icon-en" title="Favorite" style="color: #bababa;">&#10084;</button>
                 <button class="fav-icon-dis" title="Favorite" style="color: #f56df3; display: none;">&#10084;</button> 
                 <button class="play-btn" title="play" style="display: block;">▶</button>
@@ -60,7 +63,6 @@
             <marquee behavior="" direction="left">
                 <div id="mp3-song-title">Song Title</div>
             </marquee>
-            <audio src="" class="audio" controls style="display: none;"></audio>
             <div id="progress" style="display: flex;">
                 <p id="current-time" style="color: black;"></p>
                 <input type="range" min="0" max="100" value="0" id="progress-bar" style="display: block;"/>
