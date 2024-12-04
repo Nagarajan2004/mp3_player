@@ -1,5 +1,3 @@
-
-
 ::-webkit-scrollbar {
     display: none;
 }
@@ -35,7 +33,7 @@ header {
     border-radius: 10px;
 }
 
-#container{
+#container {
     display: flex;
     height: 100vh;
 }
@@ -140,7 +138,8 @@ header {
 }
 
 /* Song List */
-#song-list, #fav-song-list {
+#song-list,
+#fav-song-list {
     flex: 5;
     padding: 15px;
     background-color: white;
@@ -178,14 +177,14 @@ header {
 
 .song-title {
     color: black;
-    flex:1;
+    flex: 1;
     font-size: 18px;
     font-weight: bold;
 }
 
 .fav-icon-en,
 .fav-icon-dis,
-.play-btn, 
+.play-btn,
 .pause-btn {
     font-size: large;
     background-color: #ffffff;
@@ -238,7 +237,7 @@ header {
     margin-bottom: 20px;
 }
 
-#controls{
+#controls {
     margin: 50px;
     width: 100%;
     display: flex;
@@ -263,10 +262,17 @@ header {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-
 #progress-bar {
     margin-top: 40px;
     height: 5px;
     width: 80%;
     color: #d63031;
+}
+
+@media only screen and (max-width: 600px) {
+
+    #mp3-card{
+        display: none;
+    }
+
 }

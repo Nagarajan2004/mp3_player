@@ -33,7 +33,7 @@ function pageOnload(){
     })
 
     currActiveSong = document.getElementById('song-list').children[1];
-    console.log(currActiveSong);
+    // console.log(currActiveSong);
     document.getElementById('song-img').src = currActiveSong.querySelector('.song-avathar').src;
     document.getElementById('mp3-song-title').innerText = currActiveSong.querySelector('.song-title').innerText;
 }
