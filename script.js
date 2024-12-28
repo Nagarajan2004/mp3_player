@@ -1,4 +1,40 @@
-let songList=[];
+let songList = [
+    {
+        "img": "Andha Aruvi Pol Anbai Tharuvaal.png",
+        "title": "Andha Aruvi Pol Anbai Tharuvaal"
+    },
+    {
+        "img": "En Uyir Neethane.png",
+        "title": "En Uyir Neethane"
+    },
+    {
+        "img": "Leo Das Entry.png",
+        "title": "Leo Das Entry"
+    },
+    {
+        "img": "Oru Naalil.png",
+        "title": "Oru Naalil"
+    },
+    {
+        "img": "Sara Sara Pamba.png",
+        "title": "Sara Sara Pamba"
+    },
+    {
+        "img": "Sindhiya Venmani.png",
+        "title": "Sindhiya Venmani"
+    },
+    {
+        "img": "Thatha Thatha Konjam Podi Kodu.png",
+        "title": "Thatha Thatha Konjam Podi Kodu"
+    },
+    {
+        "img": "Unch Maza Zoka.png",
+        "title": "Unch Maza Zoka"
+    }
+];
+
+
+// let songList=[];
 
 let favSongList = [];
 
@@ -6,26 +42,26 @@ let currActiveSong = null;
 
 let currSong = 0;
 
-async function fetchData() {
-    try {
-        const req = await fetch("http://localhost:8080/mp3_player_backend/song", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        songList = await req.json();
-        pageOnload();
-    } catch (error) {
-        console.log(error);
-    }
-}
-fetchData();
+// async function fetchData() {
+    // try {
+    //     const req = await fetch("http://localhost:8080/mp3_player_backend/song", {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         }
+    //     });
+    //     songList = await req.json();
+    //     pageOnload();
+    // } catch (error) {
+    //     console.log(error);
+    // }
+// }
+// fetchData();
+window.onload = pageOnload();
 
 function pageOnload(){
-    // document.getElementById('song-img').src = "img/"+songList[0]["img"];
-    // document.getElementById('mp3-song-title').innerText = songList[0]["title"];
-    // document.querySelector('.audio').src = "songs/"+songList[0]["title"]+".mp3";
+    document.getElementById('song-img').src = "img/"+songList[0]["img"];
+    document.getElementById('mp3-song-title').innerText = songList[0]["title"];
 
     //songList ==> JSON
     songList.forEach((song)=>{
@@ -44,30 +80,34 @@ function songCardUsingTemplate(eachSong) {
     const template = document.getElementById('song-card-template');
     const songCard = template.content.cloneNode(true);
 
-    const imgStr = atob(eachSong["img"]);
-    let len = imgStr.length;
-    let bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-        bytes[i] = imgStr.charCodeAt(i);
-    }
-    const imgBlob = new Blob([bytes], { type: 'image/png' });
+    songCard.querySelector('.song-avathar').src = "img/"+eachSong["img"];
+    songCard.querySelector('.song-title').innerText = eachSong["title"];
+    songCard.querySelector('.audio-src').src = "songs/"+eachSong["title"]+".mp3";
 
-    const audioStr = atob(eachSong["audio"]);
-    len = audioStr.length;
-    bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-        bytes[i] = audioStr.charCodeAt(i);
-    }
-    const audioBlob = new Blob([bytes], { type: 'audio/mp3' });
+    // const imgStr = atob(eachSong["img"]);
+    // let len = imgStr.length;
+    // let bytes = new Uint8Array(len);
+    // for (let i = 0; i < len; i++) {
+    //     bytes[i] = imgStr.charCodeAt(i);
+    // }
+    // const imgBlob = new Blob([bytes], { type: 'image/png' });
 
-    const imgUrl = URL.createObjectURL(imgBlob);
-    const audioUrl = URL.createObjectURL(audioBlob);
-    console.log(audioBlob)
-    songCard.querySelector('.song-avathar').src = imgUrl;
-    songCard.querySelector('.audio-src').src = audioUrl;
-    songCard.querySelector('.audio').load();
+    // const audioStr = atob(eachSong["audio"]);
+    // len = audioStr.length;
+    // bytes = new Uint8Array(len);
+    // for (let i = 0; i < len; i++) {
+    //     bytes[i] = audioStr.charCodeAt(i);
+    // }
+    // const audioBlob = new Blob([bytes], { type: 'audio/mp3' });
 
-    songCard.querySelector('.song-title').innerText = eachSong["song-title"];
+    // const imgUrl = URL.createObjectURL(imgBlob);
+    // const audioUrl = URL.createObjectURL(audioBlob);
+    // console.log(audioBlob)
+    // songCard.querySelector('.song-avathar').src = imgUrl;
+    // songCard.querySelector('.audio-src').src = audioUrl;
+    // songCard.querySelector('.audio').load();
+
+    // songCard.querySelector('.song-title').innerText = eachSong["song-title"];
 
     // console.log(eachSong);
     
@@ -118,7 +158,7 @@ document.addEventListener('click', (event) => {
         
         mp3Card.querySelector('#song-img').src = parent.querySelector('.song-avathar').src;
         mp3Card.querySelector('#mp3-song-title').innerText = parent.querySelector('.song-title').innerText;
-        console.log(parent);
+        // console.log(parent);
         parent.querySelector('.audio').play();
         
         currActiveSong = parent;
@@ -159,8 +199,9 @@ document.addEventListener('click', (event) => {
 
         parent.querySelector('.audio').play().then(() => {
             setInterval(() => {
-                const currentTime = audio.currentTime;
-                const duration = audio.duration;
+                console.log(parent);
+                const currentTime = parent.querySelector('.audio').currentTime;
+                const duration = parent.querySelector('.audio').duration;
                 document.getElementById('progress-bar').value = (currentTime / duration) * 100;
                 document.getElementById('current-time').innerText = 
                     Math.floor(currentTime / 60) + ":" + String(Math.floor(currentTime % 60)).padStart(2, '0');
